@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chenxing"
+version = "1.0.0"
+description = "Chenxing (晨星) — a world-class LLM inference & agent stack standing on the shoulders of RadixAttention, PagedAttention, speculative decoding, FlashAttention and GGUF k-quants."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "晨星 (Chenxing)" }]
+keywords = ["llm", "inference", "paged-attention", "radix-attention", "speculative-decoding", "quantization", "agent"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+hf = ["safetensors>=0.4", "tokenizers>=0.15"]
+
+[project.scripts]
+chenxing = "chenxing.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["chenxing*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

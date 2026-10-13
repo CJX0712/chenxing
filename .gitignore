@@ -1,0 +1,12 @@
+# Python / build
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Generated model artifacts (regenerable via examples/export_tiny_gguf.py)
+assets/*.gguf
+
+# Editor / OS
+.DS_Store
+*.swp

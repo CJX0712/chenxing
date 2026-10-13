@@ -1,0 +1,8 @@
+Explain what zero-rewrite means for an inference stack.
+What is the difference between PagedAttention and RadixAttention?
+Write a haiku about caching prefix trees.
+Summarize speculative decoding in one sentence.
+Given a = 3 and b = 4, what is a squared plus b squared?
+Describe the role of RMSNorm in a transformer decoder.
+Why does GQA reduce KV-cache memory?
+List three GGUF k-quant formats and one trade-off each.

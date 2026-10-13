@@ -1,0 +1,62 @@
+[
+  {
+    "prefill_tokens_per_s": 27007.638101181947,
+    "decode_tokens_per_s": 3434.7662749473525,
+    "prefill_s": 0.0024,
+    "decode_s": 0.0373,
+    "n_prompts": 4,
+    "hidden": 64,
+    "prompt_len": 16,
+    "wall_s": 0.0397
+  },
+  {
+    "prefill_tokens_per_s": 31222.17752243417,
+    "decode_tokens_per_s": 2395.2633667900454,
+    "prefill_s": 0.0082,
+    "decode_s": 0.0534,
+    "n_prompts": 4,
+    "hidden": 64,
+    "prompt_len": 64,
+    "wall_s": 0.0617
+  },
+  {
+    "prefill_tokens_per_s": 12875.191133430331,
+    "decode_tokens_per_s": 2128.0062244520545,
+    "prefill_s": 0.005,
+    "decode_s": 0.0602,
+    "n_prompts": 4,
+    "hidden": 128,
+    "prompt_len": 16,
+    "wall_s": 0.0652
+  },
+  {
+    "prefill_tokens_per_s": 16568.077974899916,
+    "decode_tokens_per_s": 1625.0026978231265,
+    "prefill_s": 0.0155,
+    "decode_s": 0.0788,
+    "n_prompts": 4,
+    "hidden": 128,
+    "prompt_len": 64,
+    "wall_s": 0.0943
+  },
+  {
+    "prefill_tokens_per_s": 7310.943566794224,
+    "decode_tokens_per_s": 1602.1909962237894,
+    "prefill_s": 0.0088,
+    "decode_s": 0.0799,
+    "n_prompts": 4,
+    "hidden": 256,
+    "prompt_len": 16,
+    "wall_s": 0.0887
+  },
+  {
+    "prefill_tokens_per_s": 2804.6004212153134,
+    "decode_tokens_per_s": 1487.617905399304,
+    "prefill_s": 0.0913,
+    "decode_s": 0.086,
+    "n_prompts": 4,
+    "hidden": 256,
+    "prompt_len": 64,
+    "wall_s": 0.1774
+  }
+]
