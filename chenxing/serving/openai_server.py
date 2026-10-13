@@ -21,8 +21,15 @@ import numpy as np
 
 from ..core.sampler import SamplingParams
 from ..engine.engine import LLMEngine
+from ..model.tokenizer import ByteTokenizer
 
 __all__ = ["OpenAIHandler", "serve", "handle_request"]
+
+
+def _tok(engine: LLMEngine) -> ByteTokenizer:
+    """Resolve a tokenizer, falling back to the offline byte-level tokenizer so
+    the server is always runnable without a downloaded vocab."""
+    return engine.tokenizer or ByteTokenizer()
 
 
 def _params_from_body(body: dict[str, Any]) -> SamplingParams:
@@ -43,14 +50,15 @@ def _chat_prompt(body: dict[str, Any]) -> str:
 
 
 def _completion_ids(engine: LLMEngine, body: dict[str, Any]) -> list[int]:
+    tok = _tok(engine)
     prompt = body.get("prompt", "")
-    ids = engine.tokenizer.encode(prompt) if isinstance(prompt, str) else list(prompt)
-    if hasattr(engine.tokenizer, "bos_token_id") and engine.tokenizer.bos_token_id >= 0:
-        ids = [engine.tokenizer.bos_token_id] + ids
+    ids = tok.encode(prompt) if isinstance(prompt, str) else list(prompt)
+    if getattr(tok, "bos_token_id", -1) >= 0:
+        ids = [tok.bos_token_id] + ids
     stops = set()
     for s in body.get("stop") or []:
-        stops.update(engine.tokenizer.encode(s))
-    im_end = getattr(engine.tokenizer, "special_tokens", {}).get("<|im_end|>")
+        stops.update(tok.encode(s))
+    im_end = getattr(tok, "special_tokens", {}).get("<|im_end|>")
     if im_end is not None:
         stops.add(im_end)
     out, _ = engine.generate(ids, _params_from_body(body), stop_ids=stops)
@@ -65,12 +73,13 @@ def handle_request(engine: LLMEngine, method: str, path: str,
     if method == "GET" and path == "/v1/models":
         return 200, {"object": "list", "data": [{"id": "chenxing", "object": "model"}]}
     if method == "POST" and path == "/v1/chat/completions":
+        tok = _tok(engine)
         prompt = _chat_prompt(body)
-        ids = engine.tokenizer.encode(prompt)
+        ids = tok.encode(prompt)
         t0 = time.perf_counter()
         out, reason = engine.generate(ids, _params_from_body(body))
         dt = time.perf_counter() - t0
-        text = engine.tokenizer.decode(out)
+        text = tok.decode(out)
         for s in body.get("stop") or []:
             text = text.split(s)[0]
         return 200, {

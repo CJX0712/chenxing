@@ -8,6 +8,7 @@ import numpy as np
 
 from .engine.engine import LLMEngine
 from .model.config import ModelConfig
+from .model.tokenizer import ByteTokenizer
 from .model.transformer import build_tiny_model
 
 
@@ -16,7 +17,9 @@ def _build_engine(vocab: int = 264, layers: int = 2, hidden: int = 64):
                       intermediate_size=hidden * 2, num_hidden_layers=layers,
                       num_attention_heads=4, num_key_value_heads=2)
     model, _ = build_tiny_model(cfg)
-    return LLMEngine(model, None, block_size=8, n_blocks=128)
+    # Offline fallback: ByteTokenizer (1 id/byte) keeps serve+chat runnable with
+    # zero downloads; swap in a real GGUF/HF tokenizer for production text.
+    return LLMEngine(model, ByteTokenizer(), block_size=8, n_blocks=128)
 
 
 def cmd_selfcheck(_args) -> int:
