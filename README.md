@@ -42,7 +42,7 @@ python -m venv .venv
 # 一键自检:确定性、KV 一致性、投机无损、radix 命中
 .venv/Scripts/python -m chenxing.cli selfcheck
 
-# 跑全测试套件(45+ 不变量)
+# 跑全测试套件(84 个不变量)
 .venv/Scripts/python -m pytest tests/ -v
 
 # 基准
